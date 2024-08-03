@@ -13,7 +13,10 @@ loginBtn.addEventListener('click', () => {
 
 forgotPasswordLink.addEventListener('click', () => {
     const email = prompt("Please enter your email address:");
-    if (email && validateEmail(email)) {
+    if (email === null) {
+        // User pressed "Cancel", just exit the function
+        return;
+    } else if (validateEmail(email)) {
         alert("Your password has been sent to your email address.");
     } else {
         alert("Please enter a valid email address.");
