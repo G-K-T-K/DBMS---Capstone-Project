@@ -1,0 +1,19 @@
+{
+  "name": "dbms---capstone-project",
+  "version": "1.0.0",
+  "description": "A DBMS based project where students and teachers can access the website.\r Students will be able to apply outpass/homepass.\r Teachers will be able to approve the passes.\r The main objective of this project is that the teachers will receive notifications whenever a student applies for a pass.\r The count of numbers in the notification message will increase according to the number of students applying.\r This project was started on the basis of our college outpass approval system where these necessary features are missing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1"
+  }
+}
