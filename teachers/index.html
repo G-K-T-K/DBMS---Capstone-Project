@@ -7,10 +7,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <title>AccessFlow-Teacher</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+    
+        canvas {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+    
+        body {
+          font-family: Arial, sans-serif;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #222;
+          color: white;
+        }
+        </style>
 </head>
 
 <body>
-
+    <canvas id="backgroundCanvas"></canvas>
     <div class="container" id="container">
         <div class="form-container sign-up">
             <form>
@@ -51,6 +76,7 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="background.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Background</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #222;
+      color: white;
+    }
+
+    .content {
+      text-align: center;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="backgroundCanvas"></canvas>
+  <div class="content">
+    <h1>Welcome to the Student Page</h1>
+    <p>Explore the interactive background while you sign in!</p>
+  </div>
+
+  <script src="hi.js"></script>
+</body>
+</html>
