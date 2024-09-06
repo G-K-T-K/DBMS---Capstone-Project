@@ -3,27 +3,71 @@ const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
 const forgotPasswordLink = document.getElementById('forgotPasswordLink');
 
+// Pop-up box elements
+const popupOverlay = document.getElementById('popupOverlay');
+const closePopup = document.getElementById('closePopup');
+const popupBtn = document.getElementById('popupBtn');
+
+// Adding event listener to the "Sign In" form
+const signInForm = document.querySelector('.sign-in form');
+
+signInForm.addEventListener('submit', (event) => {
+    event.preventDefault();  // Prevent the form from submitting traditionally
+    const email = signInForm.querySelector('input[type="email"]').value;
+    const password = signInForm.querySelector('input[type="password"]').value;
+    
+    // Simulate successful sign-in
+    if (email && password) {
+        showPopup("Sign in successful!");
+        // Redirect to the homepage after 1.5 seconds
+        setTimeout(() => {
+            window.location.href = "home.html";
+        }, 1500);
+    } else {
+        showPopup("Please enter valid credentials");
+    }
+});
+
+// Register button event listener
 registerBtn.addEventListener('click', () => {
     container.classList.add("active");
 });
 
+// Login button event listener
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
+// Forgot Password functionality
 forgotPasswordLink.addEventListener('click', () => {
     const email = prompt("Please enter your email address:");
     if (email === null) {
-        // User pressed "Cancel", just exit the function
         return;
     } else if (validateEmail(email)) {
-        alert("Your password has been sent to your email address.");
+        showPopup("Your password has been sent to your email address.");
     } else {
-        alert("Please enter a valid email address.");
+        showPopup("Please enter a valid email address.");
     }
 });
 
+// Email validation function
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
 }
+
+// Show pop-up function
+function showPopup(message) {
+    const popupText = popupOverlay.querySelector("p");
+    popupText.textContent = message;
+    popupOverlay.classList.add("popup-visible");
+}
+
+// Close pop-up event
+closePopup.addEventListener('click', () => {
+    popupOverlay.classList.remove("popup-visible");
+});
+
+popupBtn.addEventListener('click', () => {
+    popupOverlay.classList.remove("popup-visible");
+});
