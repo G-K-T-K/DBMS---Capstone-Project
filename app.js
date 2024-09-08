@@ -1,3 +1,4 @@
+// app.js
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
@@ -51,4 +52,4 @@ app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
 
-module.exports = db; // Export db for route files to use
+module.exports = db; // Export db connection

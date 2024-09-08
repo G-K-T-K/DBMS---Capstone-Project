@@ -99,20 +99,20 @@
     <div class="container" id="container">
         <!-- Existing form containers -->
         <div class="form-container sign-up">
-            <form>
+            <form method="POST" action="/students/api/signup">
                 <h1>Create Account</h1>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="New Password">
-                <input type="password" placeholder="Confirm Password">
-                <button>Sign Up</button>
+                <input type="text" placeholder="Name" name="name" required>
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="New Password" name="password" required>
+                <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+                <button type="submit">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form>
+            <form method="POST" action="/signin">
                 <h1>Sign In</h1>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="password" required>
                 <a href="#" id="forgotPasswordLink">Forget Your Password?</a>
                 <button type="submit">Sign In</button>
             </form>
