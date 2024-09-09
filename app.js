@@ -3,11 +3,13 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 // Initialize the app
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors()); // Make sure this is used after initializing app
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -30,8 +32,8 @@ app.use('/students', express.static(path.join(__dirname, 'students')));
 app.use('/teachers', express.static(path.join(__dirname, 'teachers')));
 
 // Import routes
-const studentRoutes = require('./routes/students');
-const teacherRoutes = require('./routes/teachers');
+const studentRoutes = require('./routes/students')(db);
+const teacherRoutes = require('./routes/teachers')(db);
 
 // Use routes
 app.use('/students/api', studentRoutes);
@@ -51,5 +53,3 @@ app.get('/teachers/login', (req, res) => {
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
-
-module.exports = db; // Export db connection

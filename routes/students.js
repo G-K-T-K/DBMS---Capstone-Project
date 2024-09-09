@@ -1,66 +1,52 @@
+// routes/students.js
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../app'); // Ensure this exports your MySQL connection
 
-// Register route for students
-router.post('/signup', (req, res) => {
-  const { name, email, password, confirm_password } = req.body;
+module.exports = (db) => {
+  const router = express.Router();
 
-  if (password !== confirm_password) {
-    return res.status(400).send('Passwords do not match');
-  }
+  // Login route for students
+  router.post('/signin', (req, res) => {
+    const { email, password } = req.body;
 
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) throw err;
-    const sql = 'INSERT INTO students (name, email, password) VALUES (?, ?, ?)';
-    db.query(sql, [name, email, hashedPassword], (err, result) => {
+    console.log('Sign-in request received:', { email, password });
+
+    // Check if the email exists in the students table
+    const sql = 'SELECT * FROM students WHERE email = ?';
+    db.query(sql, [email], (err, results) => {
       if (err) {
-        console.error('Error during student registration:', err);
-        return res.status(500).send('Error registering student');
+        console.error('Error querying the database:', err);
+        return res.status(500).json({ success: false, message: 'Database error' });
       }
-      res.send('Student registered successfully');
+
+      if (results.length === 0) {
+        console.log('No user found with this email:', email);
+        return res.status(400).json({ success: false, message: 'No user with that email found. Please register.' });
+      }
+
+      const user = results[0];
+      console.log('User found:', user);
+
+      // If user is found, compare the password
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) {
+          console.error('Error comparing passwords:', err);
+          return res.status(500).json({ success: false, message: 'Server error' });
+        }
+
+        if (isMatch) {
+          // Passwords match, generate token or give access
+          const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret_key', { expiresIn: '1h' });
+          console.log('Login successful for user:', email);
+          return res.json({ success: true, message: 'Login successful', token });
+        } else {
+          console.log('Incorrect password for user:', email);
+          return res.status(400).json({ success: false, message: 'Incorrect password' });
+        }
+      });
     });
   });
-});
 
-// Login route for students
-router.post('/signin', (req, res) => {
-  const { email, password } = req.body;
-
-  const sql = 'SELECT * FROM students WHERE email = ?';
-  db.query(sql, [email], (err, results) => {
-    if (err) throw err;
-
-    if (results.length === 0) {
-      return res.status(400).send('No student found');
-    }
-
-    const user = results[0];
-
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err) throw err;
-
-      if (isMatch) {
-        const token = jwt.sign({ id: user.id, role: 'student' }, 'secretkey', { expiresIn: '1h' });
-        res.json({ token });
-      } else {
-        res.status(400).send('Incorrect password');
-      }
-    });
-  });
-});
-
-// Route for students to apply for a pass
-router.post('/apply-pass', (req, res) => {
-  const { studentId, passType, reason } = req.body;
-
-  const sql = 'INSERT INTO passes (student_id, type, reason, status) VALUES (?, ?, ?, ?)';
-  db.query(sql, [studentId, passType, reason, 'pending'], (err, result) => {
-    if (err) throw err;
-    res.send('Pass applied successfully');
-  });
-});
-
-module.exports = router;
+  return router;
+};

@@ -1,3 +1,4 @@
+// script.js
 const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
@@ -11,20 +12,39 @@ const popupBtn = document.getElementById('popupBtn');
 // Adding event listener to the "Sign In" form
 const signInForm = document.querySelector('.sign-in form');
 
-signInForm.addEventListener('submit', (event) => {
-    event.preventDefault();  // Prevent the form from submitting traditionally
+signInForm.addEventListener('submit', async (event) => {
+    event.preventDefault();  // Prevent traditional form submission
+
     const email = signInForm.querySelector('input[type="email"]').value;
     const password = signInForm.querySelector('input[type="password"]').value;
-    
-    // Simulate successful sign-in
-    if (email && password) {
-        showPopup("Sign in successful!");
-        // Redirect to the homepage after 1.5 seconds
-        setTimeout(() => {
-            window.location.href = "home.html";
-        }, 1500);
-    } else {
-        showPopup("Please enter valid credentials");
+
+    try {
+        const response = await fetch('/students/api/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            if (result.success) {
+                showPopup(result.message);
+                // Redirect to the homepage after 1.5 seconds
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+            } else {
+                showPopup(result.message);  // Display error message in pop-up
+            }
+        } else {
+            showPopup('An error occurred while trying to sign in. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error during sign-in:', error);
+        showPopup('An error occurred while trying to sign in. Please try again.');
     }
 });
 

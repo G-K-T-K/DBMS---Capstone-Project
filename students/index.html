@@ -109,7 +109,7 @@
             </form>
         </div>
         <div class="form-container sign-in">
-            <form method="POST" action="/signin">
+            <form id="signInForm">
                 <h1>Sign In</h1>
                 <input type="email" placeholder="Email" name="email" required>
                 <input type="password" placeholder="Password" name="password" required>
@@ -123,7 +123,7 @@
             <div class="popup-box">
                 <span class="close-popup" id="closePopup">&times;</span>
                 <h2>Notification</h2>
-                <p>This is a sample pop-up box!</p>
+                <p id="popupMessage">This is a sample pop-up box!</p>
                 <button id="popupBtn">OK</button>
             </div>
         </div>
