@@ -30,4 +30,6 @@ CREATE TABLE passes (
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root@123';
 FLUSH PRIVILEGES;
 
+SELECT * FROM teachers;
+insert into students value (1, 'Jeevan','jee@gmail.com', 'jeevan', '2023-04-10T10:39:37');
 SELECT * FROM students;

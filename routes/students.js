@@ -48,5 +48,46 @@ module.exports = (db) => {
     });
   });
 
+  // Signup route for students
+  router.post('/signup', (req, res) => {
+    const { email, password } = req.body;
+
+    console.log('Signup request received:', { email, password });
+
+    // Check if the email already exists in the database
+    const sqlCheck = 'SELECT * FROM students WHERE email = ?';
+    db.query(sqlCheck, [email], (err, results) => {
+      if (err) {
+        console.error('Error querying the database:', err);
+        return res.status(500).json({ success: false, message: 'Database error' });
+      }
+
+      if (results.length > 0) {
+        console.log('Email already exists:', email);
+        return res.status(400).json({ success: false, message: 'Email already exists' });
+      }
+
+      // Hash the password before storing
+      bcrypt.hash(password, 10, (err, hashedPassword) => {
+        if (err) {
+          console.error('Error hashing the password:', err);
+          return res.status(500).json({ success: false, message: 'Error hashing password' });
+        }
+
+        // Insert new student into the database
+        const sqlInsert = 'INSERT INTO students (email, password) VALUES (?, ?)';
+        db.query(sqlInsert, [email, hashedPassword], (err, result) => {
+          if (err) {
+            console.error('Error inserting into the database:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+          }
+
+          console.log('User registered successfully:', email);
+          return res.status(201).json({ success: true, message: 'User registered successfully' });
+        });
+      });
+    });
+  });
+
   return router;
 };
