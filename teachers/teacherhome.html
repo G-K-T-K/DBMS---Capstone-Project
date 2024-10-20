@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher's Portal - Approve/Reject Passes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+            font-size: 2.2em;
+        }
+
+        .teacher-info {
+            margin-bottom: 30px;
+        }
+
+        .teacher-info label {
+            font-weight: bold;
+            color: #666666;
+        }
+
+        .teacher-info p {
+            margin: 5px 0 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #dddddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tick {
+            color: green;
+            font-size: 1.5em;
+        }
+
+        .cross {
+            color: red;
+            font-size: 1.5em;
+        }
+
+        .remark-box {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #cccccc;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Teacher's Portal</h1>
+
+        <div class="teacher-info">
+            <label>Teacher Name:</label>
+            <p>Dr. John Smith</p>
+
+            <label>Employee ID:</label>
+            <p>EMP12345</p>
+
+            <label>Email:</label>
+            <p>john.smith@university.com</p>
+
+            <label>Phone Number:</label>
+            <p>+1234567890</p>
+
+            <label>Department:</label>
+            <p>Computer Science</p>
+        </div>
+
+        <h2>Applied Passes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pass ID</th>
+                    <th>Student Name</th>
+                    <th>Pass Type</th>
+                    <th>From (Date & Time)</th>
+                    <th>To (Date & Time)</th>
+                    <th>Reason</th>
+                    <th>Actions</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example of dynamically generated pass row -->
+                <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>Day Pass</td>
+                    <td>2024-10-18 10:00 AM</td>
+                    <td>2024-10-18 4:00 PM</td>
+                    <td>Medical Appointment</td>
+                    <td class="actions">
+                        <button class="tick">&#10004;</button>
+                        <button class="cross">&#10006;</button>
+                    </td>
+                    <td>
+                        <textarea class="remark-box" placeholder="Add remarks..."></textarea>
+                        <button class="submit-btn">Submit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jane Smith</td>
+                    <td>Out Pass</td>
+                    <td>2024-10-19 12:00 PM</td>
+                    <td>2024-10-19 8:00 PM</td>
+                    <td>Family Emergency</td>
+                    <td class="actions">
+                        <button class="tick">&#10004;</button>
+                        <button class="cross">&#10006;</button>
+                    </td>
+                    <td>
+                        <textarea class="remark-box" placeholder="Add remarks..."></textarea>
+                        <button class="submit-btn">Submit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
