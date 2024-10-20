@@ -17,15 +17,17 @@ CREATE TABLE teachers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE passes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    type ENUM('outpass', 'homepass') NOT NULL,
-    status ENUM('pending', 'approved', 'denied') DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    approved_at TIMESTAMP NULL,
-    FOREIGN KEY (student_id) REFERENCES students(id)
+CREATE TABLE pass_requests (
+    id VARCHAR(255) PRIMARY KEY,
+    student_id VARCHAR(255),
+    from_date DATETIME,
+    to_date DATETIME,
+    pass_type VARCHAR(50),
+    reason TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+select * from pass_requests;
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root@123';
 FLUSH PRIVILEGES;
@@ -36,3 +38,4 @@ SELECT * FROM students;
 
 DELETE FROM students
 WHERE id IN (13);  
+

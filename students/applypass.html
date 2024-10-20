@@ -84,7 +84,11 @@
 <body>
     <div class="container">
         <h1>Apply for Pass</h1>
-        <form action="/submit-pass" method="POST">
+        <form action="/students/applypass" method="POST">
+            <div class="form-group">
+                <label for="student_det">Student Id and Name</label>
+                <input type="text" id="student_det" name="student_det" placeholder="Enter your ID and Name" required></textarea>
+            </div>
             <div class="form-group">
                 <label for="from-date">From (Date and Time):</label>
                 <input type="datetime-local" id="from-date" name="from_date" required>

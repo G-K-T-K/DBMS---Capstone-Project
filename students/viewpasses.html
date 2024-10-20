@@ -98,38 +98,14 @@
                     <th>Creation Time</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Day Pass</td>
-                    <td>2024-10-18 10:00 AM</td>
-                    <td>2024-10-18 4:00 PM</td>
-                    <td><span class="status approved">Approved</span></td>
-                    <td>Approved by HOD</td>
-                    <td>2024-10-16 09:30 AM</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Out Pass</td>
-                    <td>2024-10-19 2:00 PM</td>
-                    <td>2024-10-19 8:00 PM</td>
-                    <td><span class="status pending">Pending</span></td>
-                    <td>--</td>
-                    <td>2024-10-16 12:45 PM</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Day Pass</td>
-                    <td>2024-10-15 9:00 AM</td>
-                    <td>2024-10-15 5:00 PM</td>
-                    <td><span class="status rejected">Rejected</span></td>
-                    <td>Invalid Reason</td>
-                    <td>2024-10-12 03:20 PM</td>
-                </tr>
+            <tbody id="passesTableBody">
+                <!-- Rows will be dynamically populated here -->
             </tbody>
         </table>
     </div>
+
     <script>
+        // Background animation
         const canvas = document.getElementById('backgroundCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -159,7 +135,6 @@
                 ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Draw lines between nearby particles
                 for (let j = index + 1; j < particles.length; j++) {
                     const dx = particle.x - particles[j].x;
                     const dy = particle.y - particles[j].y;
@@ -173,11 +148,9 @@
                     }
                 }
 
-                // Update particle position
                 particle.x += particle.speedX;
                 particle.y += particle.speedY;
 
-                // Bounce off edges
                 if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
                 if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
             });
@@ -195,6 +168,40 @@
 
         window.addEventListener('resize', resizeCanvas);
         init();
+
+        // Fetch and display pass requests
+        async function fetchPassRequests() {
+            try {
+                const response = await fetch('/students/viewpasses');
+                const passes = await response.json();
+
+                const tableBody = document.getElementById('passesTableBody');
+                tableBody.innerHTML = '';  // Clear the table body before inserting new data
+
+                passes.forEach(pass => {
+                    const row = document.createElement('tr');
+
+                    const statusClass = pass.status === 'approved' ? 'approved' : pass.status === 'pending' ? 'pending' : 'rejected';
+
+                    row.innerHTML = `
+                        <td>${pass.student_det}</td>
+                        <td>${pass.pass_type}</td>
+                        <td>${new Date(pass.from_date).toLocaleString()}</td>
+                        <td>${new Date(pass.to_date).toLocaleString()}</td>
+                        <td>${pass.c_status}</td>
+                        <td>${pass.remark}</td>
+                        <td>${new Date(pass.submitted_at).toLocaleString()}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching pass requests:', error);
+            }
+        }
+
+        // Call the function to fetch and display pass requests
+        fetchPassRequests();
     </script>
 </body>
 </html>
