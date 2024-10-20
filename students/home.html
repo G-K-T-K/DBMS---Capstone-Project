@@ -3,9 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students - Home</title>
+    <title>Student Gate Pass System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+            font-size: 2.2em;
+        }
+
+        .info-section {
+            margin: 20px 0;
+        }
+
+        .info-section label {
+            font-size: 1em;
+            color: #666666;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-section p {
+            font-size: 1.2em;
+            color: #333333;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 0;
+        }
+
+        .link-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .link {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #3498db;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .link:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>Student Information</h1>
+        <div class="info-section">
+            <label>Username:</label>
+            <p>john_doe123</p>
+        </div>
+
+        <div class="info-section">
+            <label>Student Name:</label>
+            <p>John Doe</p>
+        </div>
+
+        <div class="info-section">
+            <label>Student Department:</label>
+            <p>Computer Science</p>
+        </div>
+
+        <div class="info-section">
+            <label>Student Year:</label>
+            <p>2nd Year</p>
+        </div>
+
+        <div class="link-container">
+            <a href="applypass.html" class="link">Apply Pass</a>  <!-- Update href to point to the Apply Pass page -->
+            <a href="viewpasses.html" class="link">View Applied Passes</a>
+        </div>
+    </div>
 </body>
 </html>
