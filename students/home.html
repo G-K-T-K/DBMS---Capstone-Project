@@ -7,52 +7,49 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #101112;
+            background-color: #1a1a2e; /* Darker background */
             margin: 0;
             padding: 0;
-            height: 100%;
+            height: 100vh;
             overflow: hidden;
+            color: #ffffff;
         }
 
         .container {
             max-width: 600px;
             margin: 50px auto;
-            background-color: #80868e;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative; /* Add this line to stack the container above the canvas */
-            z-index: 1; /* Ensure it is above the canvas */
+            background-color: #16213e; /* Dark blue background */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
         }
-        canvas {
-            position: absolute; /* Change to absolute positioning */
-            top: 0;
-            left: 0;
-            width: 100%; /* Make it cover the full width */
-            height: 100%; /* Make it cover the full height */
-            z-index: 0; /* Ensure it stays behind other content */
-        }
+
         h1 {
             text-align: center;
-            color: #333333;
-            font-size: 2.2em;
+            font-size: 2.4em;
+            margin-bottom: 20px;
+            color: #0fbcf9; /* Bright blue */
         }
 
         .info-section {
             margin: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
         }
 
         .info-section label {
-            font-size: 1em;
-            color: #666666;
+            font-size: 1.1em;
+            color: #f0f0f0; /* Light gray */
             display: block;
             margin-bottom: 5px;
         }
 
         .info-section p {
-            font-size: 1.2em;
-            color: #333333;
-            background-color: #f8f9fa;
+            font-size: 1.3em;
+            color: #ffffff; /* White text */
+            background-color: rgba(255, 255, 255, 0.1); /* Light transparent background */
             padding: 10px;
             border-radius: 5px;
             margin: 0;
@@ -61,21 +58,35 @@
         .link-container {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .link {
             text-decoration: none;
             color: #ffffff;
-            background-color: #3498db;
-            padding: 10px 15px;
+            background-color: #e94560; /* Coral red */
+            padding: 12px 20px;
             border-radius: 5px;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
+            font-size: 1.2em;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex: 1;
+            margin: 0 5px;
         }
 
         .link:hover {
-            background-color: #2980b9;
+            background-color: #d83250; /* Darker coral red */
+            transform: translateY(-2px);
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5; /* More opacity for background canvas */
         }
     </style>
 </head>
@@ -138,7 +149,6 @@
                 ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Draw lines between nearby particles
                 for (let j = index + 1; j < particles.length; j++) {
                     const dx = particle.x - particles[j].x;
                     const dy = particle.y - particles[j].y;
@@ -152,11 +162,9 @@
                     }
                 }
 
-                // Update particle position
                 particle.x += particle.speedX;
                 particle.y += particle.speedY;
 
-                // Bounce off edges
                 if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
                 if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
             });

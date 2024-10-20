@@ -12,15 +12,16 @@
             padding: 0;
             height: 100%;
             overflow: hidden;
+            color: #f0f0f0;
         }
 
         .container {
             max-width: 900px;
             margin: 50px auto;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
             z-index: 1;
         }
@@ -36,33 +37,39 @@
 
         h1 {
             text-align: center;
-            color: #333333;
-            font-size: 2.2em;
+            color: #17180d;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         table th, table td {
-            border: 1px solid #dddddd;
-            padding: 12px;
+            padding: 15px;
             text-align: left;
+            transition: background-color 0.3s;
         }
 
         table th {
-            background-color: #3498db;
+            background-color: #0c0c0c;
             color: white;
+            font-weight: bold;
+            font-size: 1.1em;
         }
 
+        table tr:nth-child(odd) {
+            background-color: #a53535;
+        }
         table tr:nth-child(even) {
-            background-color: #f8f8f8;
-        }
-
-        table tr:hover {
-            background-color: #f1f1f1;
+            background-color: #a53535;
         }
 
         .status {
@@ -70,11 +77,11 @@
         }
 
         .pending {
-            color: #f39c12;
+            color: #ece8e2;
         }
 
         .approved {
-            color: #27ae60;
+            color: #05f86a;
         }
 
         .rejected {
@@ -181,15 +188,15 @@
                 passes.forEach(pass => {
                     const row = document.createElement('tr');
 
-                    const statusClass = pass.status === 'approved' ? 'approved' : pass.status === 'pending' ? 'pending' : 'rejected';
+                    const statusClass = pass.c_status === 'approved' ? 'approved' : pass.c_status === 'pending' ? 'pending' : 'rejected';
 
                     row.innerHTML = `
                         <td>${pass.student_det}</td>
                         <td>${pass.pass_type}</td>
                         <td>${new Date(pass.from_date).toLocaleString()}</td>
                         <td>${new Date(pass.to_date).toLocaleString()}</td>
-                        <td>${pass.c_status}</td>
-                        <td>${pass.remark}</td>
+                        <td class="${statusClass}">${pass.c_status}</td>
+                        <td class="remark">${pass.remark}</td>
                         <td>${new Date(pass.submitted_at).toLocaleString()}</td>
                     `;
 
