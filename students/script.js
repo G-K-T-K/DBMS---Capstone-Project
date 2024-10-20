@@ -14,7 +14,8 @@ const signInForm = document.querySelector('.sign-in form');
 
 signInForm.addEventListener('submit', async (event) => {
     event.preventDefault();  // Prevent traditional form submission
-
+    
+    const name = signUpForm.querySelector('input[name="name"]').value;
     const email = signInForm.querySelector('input[type="email"]').value;
     const password = signInForm.querySelector('input[type="password"]').value;
 
@@ -24,7 +25,7 @@ signInForm.addEventListener('submit', async (event) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ name, email, password })
         });
 
         const result = await response.json();

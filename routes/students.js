@@ -50,9 +50,9 @@ module.exports = (db) => {
 
   // Signup route for students
   router.post('/signup', (req, res) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
-    console.log('Signup request received:', { email, password });
+    console.log('Signup request received:', { name, email, password });
 
     // Check if the email already exists in the database
     const sqlCheck = 'SELECT * FROM students WHERE email = ?';
@@ -74,16 +74,16 @@ module.exports = (db) => {
           return res.status(500).json({ success: false, message: 'Error hashing password' });
         }
 
-        // Insert new student into the database
-        const sqlInsert = 'INSERT INTO students (email, password) VALUES (?, ?)';
-        db.query(sqlInsert, [email, hashedPassword], (err, result) => {
+        // Insert new student into the database including name
+        const sqlInsert = 'INSERT INTO students (name, email, password) VALUES (?, ?, ?)';
+        db.query(sqlInsert, [name, email, hashedPassword], (err, result) => {
           if (err) {
             console.error('Error inserting into the database:', err);
             return res.status(500).json({ success: false, message: 'Database error' });
           }
 
           console.log('User registered successfully:', email);
-          return res.status(201).json({ success: true, message: 'User registered successfully' });
+          res.redirect('/students/home.html');
         });
       });
     });
