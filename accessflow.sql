@@ -17,17 +17,22 @@ CREATE TABLE teachers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+drop table pass_requests;
+
 CREATE TABLE pass_requests (
-    id VARCHAR(255) PRIMARY KEY,
-    student_id VARCHAR(255),
+    student_det VARCHAR(255),
     from_date DATETIME,
     to_date DATETIME,
     pass_type VARCHAR(50),
-    reason TEXT,
-    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    reason VARCHAR(50),
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    c_status varchar(255),
+    remark varchar(255),
+    passID INT AUTO_INCREMENT primary key
 );
 
-select * from pass_requests;
+SELECT * FROM pass_requests;
+
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root@123';
 FLUSH PRIVILEGES;
