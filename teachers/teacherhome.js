@@ -17,7 +17,7 @@ window.onload = function() {
                 <td>${pass.pass_type}</td>
                 <td>${new Date(pass.from_date).toLocaleString()}</td>
                 <td>${new Date(pass.to_date).toLocaleString()}</td>
-                <td>${pass.reason || 'No reason provided'}</td>
+                <td>${pass.reason || 'visit'}</td>
                 <td class="actions">
                     <button class="tick" onclick="updateStatus(${pass.passID}, 'Approved')">&#10004;</button>
                     <button class="cross" onclick="updateStatus(${pass.passID}, 'Rejected')">&#10006;</button>
@@ -40,7 +40,7 @@ function updateStatus(passID, c_status) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ passId: passID, c_status, remark: remarks })
+        body: JSON.stringify({ passID: passID, c_status, remark: remarks })
     })
     .then(response => response.text())
     .then(result => {
@@ -64,7 +64,7 @@ function submitRemarks(passID) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ passId: passID, c_status: '', remark: remarks })
+        body: JSON.stringify({ passID: passID, c_status: '', remark: remarks })
     })
     .then(response => response.text())
     .then(result => {
@@ -77,7 +77,7 @@ function submitRemarks(passID) {
     });
 }
 app.post('/api/passes/update', (req, res) => {
-    const { passId, c_status, remark } = req.body;
+    const { passID, c_status, remark } = req.body;
     
     // Build update query for both status and remark
     let updateQuery = 'UPDATE pass_requests SET ';
@@ -95,7 +95,7 @@ app.post('/api/passes/update', (req, res) => {
     }
     
     updateQuery += ' WHERE id = ?';
-    queryParams.push(passId);
+    queryParams.push(passID);
     
     db.query(updateQuery, queryParams, (err, result) => {
         if (err) {

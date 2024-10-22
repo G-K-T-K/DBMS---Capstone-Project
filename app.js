@@ -130,5 +130,65 @@ app.post('/api/passes/update', (req, res) => {
   });
 });
 
+const nodemailer = require('nodemailer');
+
+// Route to handle pass application
+app.post('/students/applypass', (req, res) => {
+    const { student_det, from_date, to_date, pass_type, reason } = req.body;
+
+    // Logic to store pass application in the database
+    const query = `INSERT INTO pass_requests (student_det, pass_type, from_date, to_date, reason) VALUES (?, ?, ?, ?, ?)`;
+    const values = [student_det, pass_type, from_date, to_date, reason];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error('Error inserting pass request:', err);
+            return res.status(500).send('Error submitting pass request');
+        }
+
+        // After inserting the pass request, send the email
+        sendEmail(student_det, pass_type, from_date, to_date, reason, (err) => {
+            if (err) {
+                console.error('Error sending email:', err);
+                return res.status(500).send('Pass request submitted, but error sending email');
+            }
+            res.send('Pass request submitted and email sent successfully');
+        });
+    });
+});
+
+// Function to send email
+function sendEmail(student_det, pass_type, from_date, to_date, reason, callback) {
+    const transporter = nodemailer.createTransport({
+        service: 'Outlook', // You can use any email service like Gmail, Outlook, etc.
+        auth: {
+            user: 'ch.en.u4aie22062@ch.students.amrita.edu', // Replace with your email
+            pass: 'Tharun@28'   // Replace with your email password or app-specific password
+        }
+    });
+
+    const mailOptions = {
+        from: 'ch.en.u4aie22062@ch.students.amrita.edu',
+        to: 'ch.en.u4aie22020@ch.students.amrita.edu', // Replace with the specific mail ID you want to send to
+        subject: 'New Pass Application Submitted',
+        html: `
+            <h3>New Pass Application</h3>
+            <p><strong>Student Details:</strong> ${student_det}</p>
+            <p><strong>Pass Type:</strong> ${pass_type}</p>
+            <p><strong>From:</strong> ${new Date(from_date).toLocaleString()}</p>
+            <p><strong>To:</strong> ${new Date(to_date).toLocaleString()}</p>
+            <p><strong>Reason:</strong> ${reason}</p>
+        `
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.error('Error sending email:', err);
+            return callback(err);
+        }
+        console.log('Email sent: ' + info.response);
+        callback(null);
+    });
+}
 
 
