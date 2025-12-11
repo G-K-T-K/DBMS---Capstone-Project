@@ -4,17 +4,17 @@ AccessFlow is a DBMS-based web application that allows students to submit outpas
 
 ---
 
-## 🚀 Features
+## Features
 
-### ✔ Student Module
+### Student Module
 - Submit outpass/homepass requests
 - Check request history and approval status
 
-### ✔ Teacher Module
+### Teacher Module
 - View and approve/reject pending requests
 - Real-time notification updates for new requests
 
-### ✔ Analytics Module (Snowflake + Tableau)
+### Analytics Module (Snowflake + Tableau)
 - Request volume insights
 - Peak request hour detection
 - Teacher workload monitoring
@@ -22,7 +22,7 @@ AccessFlow is a DBMS-based web application that allows students to submit outpas
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### **Backend**
 - Node.js / Express.js
@@ -44,7 +44,7 @@ AccessFlow is a DBMS-based web application that allows students to submit outpas
 
 ---
 
-## 🧩 Architecture Overview
+## Architecture Overview
 
 MySQL (Transactional DB)
 ↓
@@ -62,7 +62,7 @@ Tableau Dashboards
 
 ---
 
-## 📄 YAML — Data Pipeline Definition  
+## YAML — Data Pipeline Definition  
 *(Added as requested to describe the pipeline in a structured, DevOps-style format)*
 
 ```yaml
